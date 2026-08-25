@@ -5,8 +5,11 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: library_db
-      POSTGRES_USER: ${postgres}
-      POSTGRES_PASSWORD: ${postgres}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-backup/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     ports:
       - "5432:5432"
     healthcheck:
@@ -32,3 +35,6 @@ services:
       APP_PORT: ${APP_PORT:-8080}
     ports:
       - "${APP_PORT:-8080}:${APP_PORT:-8080}"
+
+volumes:
+  postgres_data:

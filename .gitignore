@@ -1,0 +1,21 @@
+# Maven / Java
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+.env
+*.dump
+!db-backup/*.dump
