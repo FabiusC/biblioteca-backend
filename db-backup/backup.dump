@@ -1,0 +1,31 @@
+BEGIN;
+
+TRUNCATE TABLE loans, copies, books, users RESTART IDENTITY CASCADE;
+
+INSERT INTO users (id, first_name, last_name, email, birth_date) VALUES
+  (1, 'Ana', 'García', 'ana.garcia@example.com', '1994-03-12'),
+  (2, 'Luis', 'Martínez', 'luis.martinez@example.com', '1988-07-25'),
+  (3, 'María', 'López', 'maria.lopez@example.com', '2000-11-08');
+
+INSERT INTO books (id, title, isbn, edition, publication_date, author) VALUES
+  (1, 'Clean Code', '9780132350884', 1, '2008-08-01', 'Robert C. Martin'),
+  (2, 'Effective Java', '9780134685991', 3, '2018-01-06', 'Joshua Bloch'),
+  (3, 'Designing Data-Intensive Applications', '9781449373320', 1, '2017-03-16', 'Martin Kleppmann');
+
+INSERT INTO copies (id, book_id, status) VALUES
+  (1, 1, 'AVAILABLE'),
+  (2, 1, 'LOANED'),
+  (3, 2, 'AVAILABLE'),
+  (4, 2, 'LOANED'),
+  (5, 3, 'AVAILABLE');
+
+INSERT INTO loans (id, user_id, book_id, copy_id, loan_date, return_date, status) VALUES
+  (1, 1, 1, 2, '2026-08-20', '2026-09-03', 'ACTIVE'),
+  (2, 2, 2, 4, '2026-07-10', '2026-07-24', 'RETURNED');
+
+SELECT setval(pg_get_serial_sequence('users', 'id'), (SELECT COALESCE(MAX(id), 1) FROM users));
+SELECT setval(pg_get_serial_sequence('books', 'id'), (SELECT COALESCE(MAX(id), 1) FROM books));
+SELECT setval(pg_get_serial_sequence('copies', 'id'), (SELECT COALESCE(MAX(id), 1) FROM copies));
+SELECT setval(pg_get_serial_sequence('loans', 'id'), (SELECT COALESCE(MAX(id), 1) FROM loans));
+
+COMMIT;
