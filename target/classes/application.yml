@@ -1,0 +1,12 @@
+server:
+  port: ${APP_PORT:8080}
+
+spring:
+  datasource:
+    url: ${DB_URI}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+  jpa:
+    hibernate:
+      ddl-auto: validate
