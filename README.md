@@ -2,15 +2,58 @@
 
 API REST para la gestión de una biblioteca construida con Java 17, Spring Boot 3.5.4, Maven y PostgreSQL. La solución está preparada para ejecutarse con Docker y utiliza una arquitectura N-capas con DTOs para aislar el contrato HTTP del modelo de dominio.
 
-## Instrucciones de ejecución
+## Instrucciones de Despliegue Rápido
 
-1. Copia el archivo `.env.example` a `.env`.
-2. Ajusta en `.env` las variables `DB_USER` y `DB_PASSWORD` con las credenciales que usarás para PostgreSQL.
-3. Levanta la aplicación con Docker.
+Pasos en terminal para levantar todo el entorno con datos de prueba cargados.
+
+### 1: Clonar el repositorio y acceder a la carpeta
+
+```bash
+git clone https://github.com/FabiusC/biblioteca-backend.git
+cd biblioteca-backend
+```
+
+### 2: Crear el archivo `.env`
+
+Copia la plantilla de entorno para crear el archivo `.env`:
+
+- **En Linux / macOS / Git Bash:**
+  ```bash
+  cp .env.example .env
+  ```
+- **En Windows (PowerShell):**
+  ```powershell
+  Copy-Item .env.example .env
+  ```
+- **En Windows (CMD):**
+  ```cmd
+  copy .env.example .env
+  ```
+  > **Importante:** Abre el archivo `.env` recién creado y cambia las variables `DB_USER` y `DB_PASSWORD` por el usuario y contraseña que prefieras (por defecto son `postgres` / `postgres`).
+
+### 3: Construir y levantar los contenedores de Docker
 
 ```bash
 docker compose up -d --build
 ```
+
+### 4: Inicializar y cargar los datos de prueba
+
+- **Comando estándar (CMD / Linux / macOS / Git Bash):**
+  ```bash
+  docker compose exec -T db psql -U postgres -d library_db < db-backup/backup.dump
+  ```
+- **Alternativa PowerShell (Si el caracter `<` da error):**
+  ```powershell
+  Get-Content db-backup/backup.dump | docker compose exec -T db psql -U postgres -d library_db
+  ```
+- **Otra opción universal (Usando cat):**
+  ```bash
+  cat db-backup/backup.dump | docker compose exec -T db psql -U postgres -d library_db
+  ```
+  _(Nota: Si cambiaste el usuario `DB_USER` en el paso 2, reemplaza `postgres` por tu usuario en los comandos anteriores)._
+
+---
 
 ## Dirección y puerto por defecto
 
@@ -20,6 +63,11 @@ La API queda expuesta por defecto en:
 - Puerto: `8080`
 
 Por tanto, la base URL local es `http://localhost:8080`.
+Prueba rápida con `curl`:
+
+```bash
+curl http://localhost:8080/api/users
+```
 
 ## Endpoints principales
 
@@ -36,20 +84,6 @@ Por tanto, la base URL local es `http://localhost:8080`.
 - `GET /api/books/{isbn}/available-copies`
 - `GET /api/loans/search?userId=1&bookId=2`
 - `POST /api/loans`
-
-## Instrucciones de restauración de datos
-
-El archivo `db-backup/backup.dump` contiene datos de prueba en formato SQL compatible con PostgreSQL. Para restaurarlo en una base local levantada con Docker:
-
-1. Asegúrate de que el contenedor de PostgreSQL esté en ejecución.
-2. Ejecuta la restauración contra la base `library_db`.
-3. Verifica que los registros se hayan cargado correctamente.
-
-```bash
-docker compose up -d db
-docker compose exec -T db psql -U "$DB_USER" -d library_db < db-backup/backup.dump
-docker compose exec db psql -U "$DB_USER" -d library_db -c "SELECT COUNT(*) FROM users;"
-```
 
 ## Arquitectura y diseño
 
