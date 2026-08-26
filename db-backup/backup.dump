@@ -10,21 +10,21 @@ INSERT INTO users (id, first_name, last_name, email, birth_date) VALUES
   (5, 'Carlos', 'Gómez', 'carlos.gomez@example.com', '1998-09-30');
 
 INSERT INTO books (id, title, isbn, edition, publication_date, author) VALUES
-  (1, 'Clean Code', '9780132350884', 1, '2008-08-01', 'Robert C. Martin'),
-  (2, 'Effective Java', '9780134685991', 3, '2018-01-06', 'Joshua Bloch'),
-  (3, 'Designing Data-Intensive Applications', '9781449373320', 1, '2017-03-16', 'Martin Kleppmann'),
-  (4, 'The Pragmatic Programmer', '9780135957059', 2, '2019-09-13', 'David Thomas, Andrew Hunt'),
-  (5, 'Design Patterns: Elements of Reusable Object-Oriented Software', '9780201633610', 1, '1994-10-31', 'Erich Gamma, Richard Helm'),
+  (1, 'Cien años de soledad', '9780307474728', 1, '1967-05-30', 'Gabriel García Márquez'),
+  (2, 'La naranja mecánica', '9780141182605', 1, '1962-01-01', 'Anthony Burgess'),
+  (3, '1984', '9780451524935', 1, '1949-06-08', 'George Orwell'),
+  (4, 'Fahrenheit 451', '9781451673319', 1, '1953-10-19', 'Ray Bradbury'),
+  (5, 'El principito', '9780156013987', 1, '1943-04-06', 'Antoine de Saint-Exupéry'),
   (6, 'Harry Potter y la piedra filosofal', '9788478884452', 1, '1997-06-26', 'J.K. Rowling'),
-  (7, 'La comunidad del anillo', '9788445071408', 1, '1954-07-29', 'J.R.R. Tolkien'),
-  (8, 'El imperio final (Nacidos de la bruma)', '9788466631189', 1, '2006-07-17', 'Brandon Sanderson'),
+  (7, 'Crónica de una muerte anunciada', '9781400034710', 1, '1981-01-01', 'Gabriel García Márquez'),
+  (8, 'Dune', '9780441172719', 1, '1965-08-01', 'Frank Herbert'),
   (9, 'Juego de tronos', '9788496208919', 1, '1996-08-01', 'George R.R. Martin'),
   (10, 'El nombre del viento', '9788401337208', 1, '2007-03-27', 'Patrick Rothfuss'),
   (11, 'El león, la bruja y el armario', '9788408057031', 1, '1950-10-16', 'C.S. Lewis'),
-  (12, 'El camino de los reyes', '9788466657660', 1, '2010-08-31', 'Brandon Sanderson'),
-  (13, 'El color de la magia', '9788401462610', 1, '1983-11-24', 'Terry Pratchett'),
+  (12, 'El alquimista', '9780061122415', 1, '1988-01-01', 'Paulo Coelho'),
+  (13, 'Matar a un ruiseñor', '9780060935467', 1, '1960-07-11', 'Harper Lee'),
   (14, 'La historia interminable', '9788420471549', 1, '1979-09-01', 'Michael Ende'),
-  (15, 'Luces del norte', '9788466634555', 1, '1995-07-09', 'Philip Pullman');
+  (15, 'Rebelión en la granja', '9780451526342', 1, '1945-08-17', 'George Orwell');
 
 INSERT INTO copies (id, book_id, status) VALUES
   (1, 1, 'AVAILABLE'),
