@@ -37,6 +37,11 @@ public class LoanService {
         Copy copy = copyRepository.findById(copyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Copy not found with id " + copyId));
 
+        long overdueLoans = loanRepository.countByUserAndStatus(user, LoanStatus.OVERDUE);
+        if (overdueLoans > 0) {
+            throw new BusinessRuleException("The user has overdue loans and cannot borrow new books");
+        }
+
         long activeLoans = loanRepository.countByUserAndStatus(user, LoanStatus.ACTIVE);
         if (activeLoans > 0) {
             throw new BusinessRuleException("The user already has active loans");
@@ -92,8 +97,16 @@ public class LoanService {
         }
 
         if (previousStatus != LoanStatus.RETURNED && loan.getStatus() == LoanStatus.RETURNED) {
+            if (loan.getStatus() == LoanStatus.RETURNED && previousStatus != LoanStatus.RETURNED) {
+                Copy copy = loan.getCopy();
+                copy.setStatus(CopyStatus.AVAILABLE);
+                copyRepository.save(copy);
+            }
+        }
+
+        if (loan.getStatus() == LoanStatus.OVERDUE && previousStatus != LoanStatus.OVERDUE) {
             Copy copy = loan.getCopy();
-            copy.setStatus(CopyStatus.AVAILABLE);
+            copy.setStatus(CopyStatus.OVERDUE);
             copyRepository.save(copy);
         }
 
