@@ -37,6 +37,18 @@ public class LoanController {
                 .ok(loanService.findByUserIdAndBookId(userId, bookId).stream().map(this::toResponse).toList());
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<LoanResponse>> findByUser(@PathVariable Long userId) {
+        return ResponseEntity
+                .ok(loanService.findByUserId(userId).stream().map(this::toResponse).toList());
+    }
+
+    @GetMapping("/book/{bookId}")
+    public ResponseEntity<List<LoanResponse>> findByBook(@PathVariable Long bookId) {
+        return ResponseEntity
+                .ok(loanService.findByBookId(bookId).stream().map(this::toResponse).toList());
+    }
+
     private LoanResponse toResponse(Loan loan) {
         return LoanResponse.builder()
                 .id(loan.getId())

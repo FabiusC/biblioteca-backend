@@ -83,6 +83,8 @@ curl http://localhost:8080/api/users
 - `DELETE /api/books/{id}`
 - `GET /api/books/{isbn}/available-copies`
 - `GET /api/loans/search?userId=1&bookId=2`
+- `GET /api/loans/user/{userId}`
+- `GET /api/loans/book/{bookId}`
 - `POST /api/loans`
 
 ## Arquitectura y diseño

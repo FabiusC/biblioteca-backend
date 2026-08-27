@@ -66,6 +66,16 @@ public class LoanService {
         return loanRepository.findByUserIdAndBookId(userId, bookId);
     }
 
+    @Transactional(readOnly = true)
+    public List<Loan> findByUserId(Long userId) {
+        return loanRepository.findByUserId(userId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Loan> findByBookId(Long bookId) {
+        return loanRepository.findByBookId(bookId);
+    }
+
     @Transactional
     @Scheduled(cron = "0 0 0 * * ?")
     public void markOverdueLoans() {
