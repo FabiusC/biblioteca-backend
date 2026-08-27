@@ -11,6 +11,7 @@ import com.library.domain.exceptions.ResourceNotFoundException;
 import com.library.domain.repositories.CopyRepository;
 import com.library.domain.repositories.LoanRepository;
 import com.library.domain.repositories.UserRepository;
+import com.library.dto.requests.LoanUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,29 @@ public class LoanService {
     @Transactional(readOnly = true)
     public List<Loan> findByBookId(Long bookId) {
         return loanRepository.findByBookId(bookId);
+    }
+
+    @Transactional
+    public Loan updateLoan(Long id, LoanUpdateRequest request) {
+        Loan loan = loanRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan not found with id " + id));
+
+        LoanStatus previousStatus = loan.getStatus();
+
+        if (request.getReturnDate() != null) {
+            loan.setReturnDate(request.getReturnDate());
+        }
+        if (request.getStatus() != null) {
+            loan.setStatus(request.getStatus());
+        }
+
+        if (previousStatus != LoanStatus.RETURNED && loan.getStatus() == LoanStatus.RETURNED) {
+            Copy copy = loan.getCopy();
+            copy.setStatus(CopyStatus.AVAILABLE);
+            copyRepository.save(copy);
+        }
+
+        return loanRepository.save(loan);
     }
 
     @Transactional

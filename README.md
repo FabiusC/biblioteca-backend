@@ -86,6 +86,7 @@ curl http://localhost:8080/api/users
 - `GET /api/loans/user/{userId}`
 - `GET /api/loans/book/{bookId}`
 - `POST /api/loans`
+- `PUT /api/loans/{id}`
 
 ## Arquitectura y diseño
 

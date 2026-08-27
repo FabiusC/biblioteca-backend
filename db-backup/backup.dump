@@ -3,11 +3,11 @@ BEGIN;
 TRUNCATE TABLE loans, copies, books, users RESTART IDENTITY CASCADE;
 
 INSERT INTO users (id, first_name, last_name, email, birth_date) VALUES
-  (1, 'Luis', 'Turriago', 'luis.barajas@example.com', '2002-03-12'),
-  (2, 'Erick', 'Garnica', 'erick.turriago@example.com', '2001-07-25'),
-  (3, 'María', 'López', 'maria.lopez@example.com', '2001-11-08'),
-  (4, 'Ana', 'Martínez', 'ana.martinez@example.com', '1995-05-14'),
-  (5, 'Carlos', 'Gómez', 'carlos.gomez@example.com', '1998-09-30');
+  (1, 'Luis', 'Turriago', 'luis.turriago@example.com', '2002-03-12'),
+  (2, 'Erick', 'Garnica', 'erick.garnicao@example.com', '2001-07-25'),
+  (3, 'Laura', 'Flechas', 'laura.flechas@example.com', '2001-11-08'),
+  (4, 'Isabela', 'Gomez', 'isa.gomez@example.com', '1995-05-14'),
+  (5, 'Mateo', 'Cruz', 'mateo.cruz@example.com', '1998-09-30');
 
 INSERT INTO books (id, title, isbn, edition, publication_date, author) VALUES
   (1, 'Cien años de soledad', '9780307474728', 1, '1967-05-30', 'Gabriel García Márquez'),

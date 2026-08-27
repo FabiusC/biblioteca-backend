@@ -3,6 +3,7 @@ package com.library.controllers;
 import com.library.domain.entities.Loan;
 import com.library.domain.services.LoanService;
 import com.library.dto.requests.LoanCreateRequest;
+import com.library.dto.requests.LoanUpdateRequest;
 import com.library.dto.responses.LoanResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +49,13 @@ public class LoanController {
     public ResponseEntity<List<LoanResponse>> findByBook(@PathVariable Long bookId) {
         return ResponseEntity
                 .ok(loanService.findByBookId(bookId).stream().map(this::toResponse).toList());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LoanResponse> updateLoan(@PathVariable Long id,
+                                                  @Valid @RequestBody LoanUpdateRequest request) {
+        Loan updatedLoan = loanService.updateLoan(id, request);
+        return ResponseEntity.ok(toResponse(updatedLoan));
     }
 
     private LoanResponse toResponse(Loan loan) {
